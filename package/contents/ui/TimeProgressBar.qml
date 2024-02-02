@@ -32,6 +32,15 @@ Rectangle {
 		color: Kirigami.Theme.highlightColor
 	}
 
+	Text {
+		color: Kirigami.Theme.textColor
+		text: Math.round(parent.value * 100) + "%"
+		anchors.centerIn: parent
+		visible: Plasmoid.configuration.showPercent
+		// offset the parent's rotation so the text is always readable
+		rotation: -parent.rotation
+	}
+
 	Rectangle {
 		// this only draws the border over the background and progressIndicator.
 		// setting the border on the parent hides it under the progressIndicator.

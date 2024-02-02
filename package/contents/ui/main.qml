@@ -24,7 +24,7 @@ PlasmoidItem {
 	Timer {
 		id: timeUpdater
 		repeat: true
-		interval: 1000
+		interval: 5000
 		running: true
 		triggeredOnStart: true
 		onTriggered: {
@@ -94,5 +94,6 @@ PlasmoidItem {
 		rotation: Plasmoid.configuration.rotation
 		Layout.fillWidth: true
 		Layout.fillHeight: true
+		Layout.preferredWidth: 60
 	}
 }
