@@ -28,18 +28,29 @@ PlasmoidItem {
 		running: true
 		triggeredOnStart: true
 		onTriggered: {
-			var val = 0
-			switch (Plasmoid.configuration.timeMode) {
-				case 0: // Calendar
-					var calendarFunctions = [getYearProgress, getMonthProgress, getWeekProgress, getDayProgress]
-					val = calendarFunctions[Plasmoid.configuration.calendarInterval]()
-					break
-				case 1: // Custom
-					val = getCustomTimeProgress()
-					break
-			}
-			root.value = Math.min(1, Math.max(0, val))
+			updateProgress()
 		}
+	}
+
+	// immediately update progress on config change
+	Component.onCompleted: {
+		Plasmoid.configuration.valueChanged.connect((key, value) => {
+			updateProgress()
+		});
+	}
+
+	function updateProgress() {
+		var val = 0
+		switch (Plasmoid.configuration.timeMode) {
+			case 0: // Calendar
+			var calendarFunctions = [getYearProgress, getMonthProgress, getWeekProgress, getDayProgress]
+			val = calendarFunctions[Plasmoid.configuration.calendarInterval]()
+			break
+			case 1: // Custom
+			val = getCustomTimeProgress()
+			break
+		}
+		root.value = Math.min(1, Math.max(0, val))
 	}
 
 	function getCustomTimeProgress() {
