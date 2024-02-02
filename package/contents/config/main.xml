@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+	http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+<kcfgfile name=""/>
+	<group name="General">
+		<entry name="timeMode" type="Enum">
+			<label></label>
+			<choices>
+				<choice name="Calendar">
+					<tooltip>Show progress of a year, month,...</tooltip>
+				</choice>
+				<choice name="Custom">
+					<tooltip>Use user-defined start and end time</tooltip>
+				</choice>
+			</choices>
+			<default>0</default>
+		</entry>
+		<entry name="calendarInterval" type="Enum">
+			<label></label>
+			<choices>
+				<choice name="Year">
+				</choice>
+				<choice name="Month">
+				</choice>
+				<choice name="Week">
+				</choice>
+				<choice name="Day">
+				</choice>
+			</choices>
+			<default>0</default>
+		</entry>
+		<entry name="weekStartsOnMonday" type="Bool">
+			<label>Whether the week starts on monday (vs sunday)</label>
+			<default>true</default>
+		</entry>
+		<entry name="customTimeStart" type="Double">
+			<label>The start of the user-defined interval</label>
+		</entry>
+		<entry name="customTimeEnd" type="Double">
+			<label>The end of the user-defined interval</label>
+		</entry>
+	</group>
+
+	<group name="Appearance">
+		<entry name="rotation" type="int">
+			<label>The rotation of the plasmoid in degrees</label>
+			<default>0</default>
+		</entry>
+		<entry name="showPercent" type="Bool">
+			<label>Whether to show the progress in percent on the bar</label>
+			<default>false</default>
+		</entry>
+	</group>
+</kcfg>
+
