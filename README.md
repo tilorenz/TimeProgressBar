@@ -7,6 +7,9 @@
 ![image](https://github.com/tilorenz/TimeProgressBar/assets/59516401/b6830522-dd7d-426e-8c28-b5b798452120)
 
 
+## Installation
+The pager is available on the [KDE store](https://store.kde.org/p/2126775), so you can download and install it directly from Plasma.
+
  ## TODO
 - make an icon
 - proper UI to set custom start and end date
