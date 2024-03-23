@@ -19,6 +19,11 @@ Rectangle {
 
 	radius: 8
 	color: Kirigami.Theme.backgroundColor
+	Layout.preferredWidth: Math.max(60,
+		(rotation === 0 || rotation === 180) && barText.visible ? barText.implicitWidth + 10 : 0
+	)
+
+	//Layout.preferredHeight: (rotation === 0 || rotation === 180) ? 30 : 60
 
 	Rectangle {
 		id: progressIndicator
@@ -60,6 +65,7 @@ Rectangle {
 	}
 
 	Text {
+		id: barText
 		color: Kirigami.Theme.textColor
 		text: fillTemplateText(Plasmoid.configuration.textTemplate, Math.round(parent.value * 100))
 		anchors.centerIn: parent

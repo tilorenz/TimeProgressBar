@@ -105,6 +105,5 @@ PlasmoidItem {
 		rotation: Plasmoid.configuration.rotation
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		Layout.preferredWidth: 60
 	}
 }
