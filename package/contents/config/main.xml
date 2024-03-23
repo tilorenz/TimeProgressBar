@@ -48,9 +48,13 @@
 			<label>The rotation of the plasmoid in degrees</label>
 			<default>0</default>
 		</entry>
-		<entry name="showPercent" type="Bool">
-			<label>Whether to show the progress in percent on the bar</label>
+		<entry name="showText" type="Bool">
+			<label>Whether to show text on the bar</label>
 			<default>false</default>
+		</entry>
+		<entry name="textTemplate" type="String">
+			<label>The template text</label>
+			<default>%p%%</default>
 		</entry>
 	</group>
 </kcfg>

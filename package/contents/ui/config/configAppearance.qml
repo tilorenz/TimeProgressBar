@@ -16,7 +16,8 @@ KCM.SimpleKCM {
 	id: layoutGeneralRoot
 
 	property int cfg_rotation
-	property alias cfg_showPercent: showPercentBox.checked
+	property alias cfg_showText: showTextBox.checked
+	property alias cfg_textTemplate: textTemplateField.text
 
 	Kirigami.FormLayout {
 		id: layoutGeneral
@@ -58,8 +59,20 @@ KCM.SimpleKCM {
 		}
 
 		CheckBox {
-			id: showPercentBox
-			Kirigami.FormData.label: "Show progress in percent"
+			id: showTextBox
+			Kirigami.FormData.label: "Show text on the bar"
+		}
+		TextField {
+			id: textTemplateField
+			Kirigami.FormData.label: "Text Template"
+			enabled: showTextBox.checked
+		}
+		Label {
+			id: textTemplateExplaination
+			wrapMode: Text.Wrap
+			text: "% works as control character, %p will be replaced by the percentage.\n\
+If you want a % character in the output, use %%.\n\
+Example: 'Week progress: %p%%' expands to 'Week progress: 20%'."
 		}
 	}
 }

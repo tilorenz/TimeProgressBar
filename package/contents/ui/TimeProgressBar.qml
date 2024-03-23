@@ -32,11 +32,38 @@ Rectangle {
 		color: Kirigami.Theme.highlightColor
 	}
 
+	function fillTemplateText(text, percent) {
+		let outText = ''
+		let isReplacing = false
+		for (let c of text) {
+			if (isReplacing) {
+				switch (c) {
+					case '%':
+						outText += '%'
+						break
+					case 'p':
+						outText += percent
+						break
+					default:
+						break
+				}
+				isReplacing = false
+			} else {
+				if (c == '%') {
+					isReplacing = true
+				} else {
+					outText += c
+				}
+			}
+		}
+		return outText
+	}
+
 	Text {
 		color: Kirigami.Theme.textColor
-		text: Math.round(parent.value * 100) + "%"
+		text: fillTemplateText(Plasmoid.configuration.textTemplate, Math.round(parent.value * 100))
 		anchors.centerIn: parent
-		visible: Plasmoid.configuration.showPercent
+		visible: Plasmoid.configuration.showText
 		// offset the parent's rotation so the text is always readable
 		rotation: -parent.rotation
 	}
