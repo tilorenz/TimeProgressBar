@@ -70,7 +70,8 @@ KCM.SimpleKCM {
 		Label {
 			id: textTemplateExplaination
 			wrapMode: Text.Wrap
-			text: "% works as control character, %p will be replaced by the percentage.\n\
+			text: "% works as control character, %p will be replaced by the completed percentage,\n\
+%r by the remaining percentage.\n\
 If you want a % character in the output, use %%.\n\
 Example: 'Week progress: %p%%' expands to 'Week progress: 20%'."
 		}

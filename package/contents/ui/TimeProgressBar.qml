@@ -31,13 +31,14 @@ Rectangle {
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.margins: 1
-		width: parent.width * frBackground.value
+		width: parent.width * (Plasmoid.configuration.showRemainingTime ?
+			(1 - frBackground.value) : frBackground.value)
 
 		radius: parent.radius
 		color: Kirigami.Theme.highlightColor
 	}
 
-	function fillTemplateText(text, percent) {
+	function fillTemplateText(text, completedFraction) {
 		let outText = ''
 		let isReplacing = false
 		for (let c of text) {
@@ -47,7 +48,10 @@ Rectangle {
 						outText += '%'
 						break
 					case 'p':
-						outText += percent
+						outText += Math.round(completedFraction * 100)
+						break
+					case 'r':
+						outText += Math.round((1 - completedFraction) * 100)
 						break
 					default:
 						break
@@ -67,7 +71,7 @@ Rectangle {
 	Text {
 		id: barText
 		color: Kirigami.Theme.textColor
-		text: fillTemplateText(Plasmoid.configuration.textTemplate, Math.round(parent.value * 100))
+		text: fillTemplateText(Plasmoid.configuration.textTemplate, parent.value)
 		anchors.centerIn: parent
 		visible: Plasmoid.configuration.showText
 		// offset the parent's rotation so the text is always readable

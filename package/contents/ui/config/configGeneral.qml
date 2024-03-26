@@ -17,6 +17,7 @@ KCM.SimpleKCM {
 	property real cfg_customTimeStart
 	property real cfg_customTimeEnd
 	property alias cfg_weekStartsOnMonday: weekStartsOnMondayBox.checked
+	property alias cfg_showRemainingTime: showRemainingTimeBox.checked
 
 	Kirigami.FormLayout {
 		id: layoutGeneral
@@ -122,6 +123,11 @@ KCM.SimpleKCM {
 					cfg_customTimeEnd = d
 				}
 			}
+		}
+
+		CheckBox {
+			id: showRemainingTimeBox
+			text: "Show remaining rather than passed time"
 		}
 	}
 }
