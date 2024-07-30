@@ -31,6 +31,29 @@
 			</choices>
 			<default>0</default>
 		</entry>
+		<entry name="dayStartsAt" type="Double">
+			<label>This time is cut off from the start of the day</label>
+			<default>0</default>
+		</entry>
+		<entry name="dayEndsAt" type="Double">
+			<label>
+				This time is cut off from the end of the day
+				By default, this is just the length of one day.
+			</label>
+			<default>86400000</default>
+		</entry>
+		<entry name="weekStartsAt" type="Double">
+			<label>This time is cut off from the start of the week</label>
+			<default>0</default>
+		</entry>
+		<entry name="weekEndsAt" type="Double">
+			<label>
+				The period after which the week ends (from the start of the week).
+				By default, this is just the length of one week minus one day (since
+				the day offset is also applied to weeks).
+			</label>
+			<default>518400000</default>
+		</entry>
 		<entry name="weekStartsOnMonday" type="Bool">
 			<label>Whether the week starts on monday (vs sunday)</label>
 			<default>true</default>

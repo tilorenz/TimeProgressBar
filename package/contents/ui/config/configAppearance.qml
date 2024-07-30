@@ -44,7 +44,7 @@ KCM.SimpleKCM {
 						id: tpBar
 						height: 20
 						width: 60
-						value: 0.35
+						value: [0.35, 0, 0]
 						rotation: parent.index * 90
 					}
 					RadioButton {

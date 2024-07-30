@@ -15,7 +15,15 @@ import org.kde.kirigami as Kirigami
 Rectangle {
 	id: frBackground
 
-	required property real value
+	enum ProgressInterval {
+		Year = 0,
+		Month = 1,
+		Week = 2,
+		Day = 3,
+		Custom = 4
+	}
+
+	required property var value
 
 	radius: 8
 	color: Kirigami.Theme.backgroundColor
@@ -32,13 +40,13 @@ Rectangle {
 		anchors.bottom: parent.bottom
 		anchors.margins: 1
 		width: parent.width * (Plasmoid.configuration.showRemainingTime ?
-			(1 - frBackground.value) : frBackground.value)
+			(1 - frBackground.value[0]) : frBackground.value[0])
 
 		radius: parent.radius
 		color: Kirigami.Theme.highlightColor
 	}
 
-	function fillTemplateText(text, completedFraction) {
+	function fillTemplateText(text, time_values) {
 		let outText = ''
 		let isReplacing = false
 		for (let c of text) {
@@ -48,10 +56,10 @@ Rectangle {
 						outText += '%'
 						break
 					case 'p':
-						outText += Math.round(completedFraction * 100)
+						outText += Math.round(time_values[0] * 100)
 						break
 					case 'r':
-						outText += Math.round((1 - completedFraction) * 100)
+						outText += Math.round((1 - time_values[0]) * 100)
 						break
 					default:
 						break
