@@ -42,17 +42,15 @@ PlasmoidItem {
 	function updateProgress() {
 		switch (Plasmoid.configuration.timeMode) {
 			case 0: // Calendar
-			root.value = getTimeProgress(
-				Plasmoid.configuration.calendarInterval) // TODO
+			root.value = getTimeProgress( Plasmoid.configuration.calendarInterval)
 				break
 			case 1: // Custom
-				// here, the 0s stay (we don't want to offset the custom time)
 				root.value = getTimeProgress(TimeProgressBar.ProgressInterval.Custom)
 				break
 		}
 	}
 
-	// returns (fraction of time passed, ms passed, ms total)
+	// returns [fraction of time passed, ms passed, ms total]
 	function getTimeProgress(interval) {
 		var start = 0
 		var end = 0
@@ -121,14 +119,8 @@ PlasmoidItem {
 				break
 			}
 		}
-		//console.log("after s,e:", start, end)
 
-		// start += offset is still a date, but end -= offset becomes a raw number.
-		// of course, those can't be subtracted from each other and things become NaN.
-		// I can't even begin to describe how much I love JS.
 		now = now.getTime()
-		//start += startOffset
-		//end -= endOffset
 		if (start >= end) {
 			return [0, 0, 0]
 		}
@@ -138,53 +130,6 @@ PlasmoidItem {
 		return [frac_passed, Math.max(0, (now - start)), (end - start)]
 	}
 
-	//function getCustomTimeProgress() {
-		//var now = new Date()
-		//var start = new Date(Plasmoid.configuration.customTimeStart)
-		//var end = new Date(Plasmoid.configuration.customTimeEnd)
-		////console.log("now:", now.toString(), ", start:", start.toString(), ", end:", end.toString())
-		//return (now - start) / (end - start)
-	//}
-
-	//function getYearProgress() {
-		//var now = new Date()
-		//var start = new Date(now.getFullYear(), 0)
-		//var end = new Date(now.getFullYear() + 1, 0)
-		////console.log("now:", now.toString(), ", start:", start.toString(), ", end:", end.toString())
-		//return (now - start) / (end - start)
-	//}
-	//function getMonthProgress() {
-		//var now = new Date()
-		//var start = new Date(now.getFullYear(), now.getMonth())
-		//var end = new Date(now.getFullYear(), now.getMonth() + 1)
-		////console.log("now:", now.toString(), ", start:", start.toString(), ", end:", end.toString())
-		//return (now - start) / (end - start)
-	//}
-
-	//function getWeekProgress() { // this one's a little different...
-		//var now = new Date()
-		//var weekDay = now.getDay()
-		//if (Plasmoid.configuration.weekStartsOnMonday) {
-			//if (weekDay === 0) { // sunday is the last day...
-				//weekDay = 6
-			//} else { // monday is the first day, so 1->0, tuesday 2->1...
-				//weekDay -= 1
-			//}
-		//}
-		//var start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - weekDay)
-		//var end = new Date(now.getFullYear(), now.getMonth(), now.getDate() - weekDay + 7)
-		////console.log("now:", now.toString(), ", start:", start.toString(), ", end:", end.toString())
-		//return (now - start) / (end - start)
-	//}
-
-	//function getDayProgress() {
-		//var now = new Date()
-		//var start = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-		//var end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
-		////console.log("now:", now.toString(), ", start:", start.toString(), ", end:", end.toString())
-		//return (now - start) / (end - start)
-	//}
-
 	fullRepresentation: TimeProgressBar {
 		value: root.value
 		rotation: Plasmoid.configuration.rotation
@@ -192,3 +137,4 @@ PlasmoidItem {
 		Layout.fillHeight: true
 	}
 }
+

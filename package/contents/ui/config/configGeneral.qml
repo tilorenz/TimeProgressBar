@@ -97,11 +97,6 @@ KCM.SimpleKCM {
 			}
 		}
 
-		//Item {
-			//Kirigami.FormData.isSection: true
-			//Kirigami.FormData.label: i18n("Day offset")
-		//}
-
 		RangeSlider {
 			id: dayOffsetSlider
 			Kirigami.FormData.label: i18n("Day offset:")
