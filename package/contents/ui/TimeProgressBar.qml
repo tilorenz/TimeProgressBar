@@ -53,7 +53,7 @@ Rectangle {
 	// time_values are [fraction of time passed, ms passed, ms total]
 	function fillTemplateText(text, time_values) {
 		let [frac_time_passed, abs_time_passed, abs_time_total] = time_values
-		let abs_time_remaining = abs_time_total - abs_time_passed
+		let abs_time_remaining = Math.max(0, abs_time_total - abs_time_passed)
 
 		let outText = ''
 		let isReplacing = false
