@@ -5,11 +5,7 @@
 
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
-import org.kde.kcmutils as KCM
-import org.kde.kirigamiaddons.dateandtime
-import org.kde.kirigamiaddons.components as Components
 
 Column {
 	id: root
