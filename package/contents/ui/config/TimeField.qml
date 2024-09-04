@@ -17,6 +17,7 @@ Row {
 
 	property int hours
 	property int minutes
+	property alias show24: popup.show24
 
 	function parseTime(str) {
 		// 1 or 2 digits before and after the : and nothing else on the line
@@ -57,6 +58,7 @@ Row {
 
 	TBTimePopup {
 		id: popup
+		//show24: true
 		onAccepted: {
 			root.hours = hours
 			root.minutes = minutes

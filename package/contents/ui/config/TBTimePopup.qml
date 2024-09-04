@@ -18,6 +18,7 @@ Dialog {
 
 	property alias hours: timePicker.hours
 	property alias minutes: timePicker.minutes
+	property alias show24: timePicker.show24
 
 	contentItem: TBTimePicker {
 		id: timePicker
