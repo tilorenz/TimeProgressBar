@@ -8,7 +8,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.kcmutils as KCM
-//import org.kde.kirigamiaddons.dateandtime as KAD
 
 import "."
 
@@ -122,77 +121,35 @@ KCM.SimpleKCM {
 			enabled: cfg_timeMode == 0 && (calendarIntervalWeekBtn.checked || calendarIntervalDayBtn.checked)
 			Label {text: "Days go from: "}
 
-			SpinBox {
-				id: dayStartOffsetHoursBox
-				editable: true
-				from: 0
-				to: 24
-				onValueModified: {
-					var hours = dayStartOffsetHoursBox.value
-					var minutes = dayStartOffsetMinutesBox.value
-					if (!Number.isNaN(hours) && !Number.isNaN(minutes)) {
-						cfg_dayStartsAt = hours * one_hour + minutes * one_minute
-					}
-				}
+			TimeField {
+				id: dayStartOffsetField
 				// TODO floor sometimes goes to the last hour, but we need floor the hours,
 				// otherwise the hour would jump at :30 (7h29 -> 8h30)...
-				value: Math.floor(cfg_dayStartsAt / one_hour)
-			}
-
-			Label {text: " : "}
-
-			SpinBox {
-				id: dayStartOffsetMinutesBox
-				editable: true
-				from: 0
-				to: 59
-				onValueModified: {
-					var hours = dayStartOffsetHoursBox.value
-					var minutes = dayStartOffsetMinutesBox.value
-					if (!Number.isNaN(hours) && !Number.isNaN(minutes)) {
-						cfg_dayStartsAt = hours * one_hour + minutes * one_minute
-					}
+				hours: Math.floor(cfg_dayStartsAt / one_hour)
+				minutes: Math.floor((cfg_dayStartsAt % one_hour) / one_minute)
+				onAccepted: {
+					cfg_dayStartsAt = hours * one_hour + minutes * one_minute
+					// need to manually restore the bindings after we changed the hours and minutes
+					hours = Qt.binding(() => Math.floor(cfg_dayStartsAt / one_hour))
+					minutes = Qt.binding(() => Math.floor((cfg_dayStartsAt % one_hour) / one_minute))
 				}
-				value: Math.floor((cfg_dayStartsAt % one_hour) / one_minute)
 			}
 
 			Label {text: " to: "}
 
-			SpinBox {
-				id: dayEndOffsetHoursBox
-				editable: true
-				from: 0
-				to: 24
-				onValueModified: {
-					var hours = dayEndOffsetHoursBox.value
-					var minutes = dayEndOffsetMinutesBox.value
-					if (!Number.isNaN(hours) && !Number.isNaN(minutes)) {
-						cfg_dayEndsAt = hours * one_hour + minutes * one_minute
-					}
+			TimeField {
+				id: dayEndOffsetField
+				show24: true
+				hours: Math.floor(cfg_dayEndsAt / one_hour)
+				minutes: Math.floor((cfg_dayEndsAt % one_hour) / one_minute)
+				onAccepted: {
+					cfg_dayEndsAt = hours * one_hour + minutes * one_minute
+					// need to manually restore the bindings after we changed the hours and minutes
+					hours = Qt.binding(() => Math.floor(cfg_dayEndsAt / one_hour))
+					minutes = Qt.binding(() => Math.floor((cfg_dayEndsAt % one_hour) / one_minute))
 				}
-				value: Math.floor(cfg_dayEndsAt / one_hour)
-			}
-
-			Label {text: " : "}
-
-			SpinBox {
-				id: dayEndOffsetMinutesBox
-				editable: true
-				from: 0
-				to: (dayEndOffsetHoursBox.value == 24) ? 0 : 59
-				onValueModified: {
-					var hours = dayEndOffsetHoursBox.value
-					var minutes = dayEndOffsetMinutesBox.value
-					if (!Number.isNaN(hours) && !Number.isNaN(minutes)) {
-						cfg_dayEndsAt = hours * one_hour + minutes * one_minute
-					}
-				}
-				value: Math.floor((cfg_dayEndsAt % one_hour) / one_minute)
 			}
 		}
-
-		//Label {text: cfg_dayStartsAt}
-		//Label {text: cfg_dayEndsAt}
 
 		RangeSlider {
 			id: weekOffsetSlider
@@ -266,9 +223,6 @@ KCM.SimpleKCM {
 				}
 			}
 		}
-
-		//Label {text: cfg_weekStartsAt / one_day}
-		//Label {text: cfg_weekEndsAt / one_day}
 
 		ButtonGroup {
 			id: weekStartsOnMondayGroup
@@ -384,6 +338,7 @@ KCM.SimpleKCM {
 			}
 
 			TimeField {
+				show24: true
 				hours: customTimeEndRow.customEndDate.getHours()
 				minutes: customTimeEndRow.customEndDate.getMinutes()
 				onAccepted: {
