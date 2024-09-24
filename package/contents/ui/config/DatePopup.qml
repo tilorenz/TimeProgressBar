@@ -19,6 +19,7 @@ import "."
 Dialog {
 	id: root
 	anchors.centerIn: parent
+	parent: Overlay.overlay
 
 	property alias value: datePicker.selectedDate
 
