@@ -32,7 +32,7 @@ KCM.SimpleKCM {
 
 	property real cfg_customTimeStart
 	property real cfg_customTimeEnd
-	property alias cfg_weekStartsOnMonday: weekStartsOnMondayBox.checked
+	property alias cfg_weekStartsOnMonday: weekStartsOnMondayBtn.checked
 	property alias cfg_showRemainingTime: showRemainingTimeBox.checked
 
 	Kirigami.FormLayout {
@@ -120,7 +120,7 @@ KCM.SimpleKCM {
 
 		Row {
 			enabled: cfg_timeMode == 0 && (calendarIntervalWeekBtn.checked || calendarIntervalDayBtn.checked)
-			Label {text: "Day starts at: "}
+			Label {text: "Days go from: "}
 
 			SpinBox {
 				id: dayStartOffsetHoursBox
@@ -156,7 +156,7 @@ KCM.SimpleKCM {
 				value: Math.floor((cfg_dayStartsAt % one_hour) / one_minute)
 			}
 
-			Label {text: " , ends at: "}
+			Label {text: " to: "}
 
 			SpinBox {
 				id: dayEndOffsetHoursBox
@@ -216,7 +216,7 @@ KCM.SimpleKCM {
 			id: weekOffsetRow
 			enabled: cfg_timeMode == 0 && calendarIntervalWeekBtn.checked
 
-			Label {text: "Week starts at: "}
+			Label {text: "Weeks go from: "}
 
 			SpinBox {
 				id: weekStartsAtBox
@@ -241,7 +241,7 @@ KCM.SimpleKCM {
 				}
 			}
 
-			Label {text: " , ends at: "}
+			Label {text: " to: "}
 
 			SpinBox {
 				id: weekEndsAtBox
@@ -270,12 +270,36 @@ KCM.SimpleKCM {
 		//Label {text: cfg_weekStartsAt / one_day}
 		//Label {text: cfg_weekEndsAt / one_day}
 
-		CheckBox {
-			id: weekStartsOnMondayBox
-			text: "Week starts on monday"
-			onToggled: {
-				cfg_weekStartsAt = 0
-				cfg_weekEndsAt = 6 * one_day
+		ButtonGroup {
+			id: weekStartsOnMondayGroup
+		}
+		Row {
+			Kirigami.FormData.label: "First Weekday is:"
+			enabled: cfg_timeMode == 0 && calendarIntervalWeekBtn.checked
+
+			RadioButton {
+				id: weekStartsOnMondayBtn
+				text: "Monday"
+				ButtonGroup.group: weekStartsOnMondayGroup
+
+				onToggled: {
+					cfg_weekStartsAt = 0
+					cfg_weekEndsAt = 6 * one_day
+				}
+			}
+			Item {
+				height: 1
+				width: Kirigami.Units.smallSpacing
+			}
+			RadioButton {
+				id: weekStartsOnSundayBtn
+				text: "Sunday"
+				ButtonGroup.group: weekStartsOnMondayGroup
+
+				onToggled: {
+					cfg_weekStartsAt = 0
+					cfg_weekEndsAt = 6 * one_day
+				}
 			}
 		}
 
@@ -334,7 +358,7 @@ KCM.SimpleKCM {
 
 		Row {
 			id: customTimeEndRow
-			Kirigami.FormData.label: "From"
+			Kirigami.FormData.label: "To"
 			enabled: cfg_timeMode === 1
 
 			property date customEndDate: if (Number.isNaN(plasmoid.configuration.customTimeEnd)) {
