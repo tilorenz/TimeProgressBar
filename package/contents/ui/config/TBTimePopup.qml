@@ -11,6 +11,7 @@ import "."
 
 Dialog {
 	id: root
+	anchors.centerIn: parent
 
 	property alias hours: timePicker.hours
 	property alias minutes: timePicker.minutes

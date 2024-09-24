@@ -18,6 +18,7 @@ import "."
 
 Dialog {
 	id: root
+	anchors.centerIn: parent
 
 	property alias value: datePicker.selectedDate
 
