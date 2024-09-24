@@ -13,6 +13,7 @@ Row {
 	id: root
 
 	property date value: new Date()
+	signal accepted()
 
 	function parseTime(str) {
 		var dateRe = /^(\d*)-(\d\d?)-(\d\d?$)/
@@ -20,7 +21,7 @@ Row {
 		if (!matches || matches.length != 4) {
 			return [false, null, null, null]
 		} else {
-			console.log('parsed:', [true, Number(matches[1]), Number(matches[2]) - 1, Number(matches[3])])
+			//console.log('parsed:', [true, Number(matches[1]), Number(matches[2]) - 1, Number(matches[3])])
 			return [true, Number(matches[1]), Number(matches[2]) - 1, Number(matches[3])]
 		}
 	}
@@ -46,6 +47,7 @@ Row {
 			var [success, year, month, day] = parseTime(text)
 			if (success) {
 				root.value.setFullYear(year, month, day)
+				root.accepted()
 			} else {
 				text = Qt.binding(() =>
 					formatDate(root.value)
@@ -61,18 +63,24 @@ Row {
 		onAccepted: {
 			// don't just set the date, we want to keep the time (hours/minutes)
 			root.value.setFullYear(value.getFullYear(), value.getMonth(), value.getDate())
+			root.accepted()
 		}
 	}
 
 	Button {
 		id: showPopupButton
 		icon.name: "expand-symbolic"
-		background: Rectangle {
-			color: Kirigami.Theme.backgroundColor
-			bottomRightRadius: Kirigami.Units.cornerRadius
-			topRightRadius: Kirigami.Units.cornerRadius
-			height: field.height
-		}
+		height: field.height
+
+		// TODO see TimeField
+		//background: Rectangle {
+			//color: Kirigami.Theme.backgroundColor
+			//implicitWidth: Kirigami.Units.gridUnit * 1.2
+			//implicitHeight: field.height
+			//bottomRightRadius: Kirigami.Units.cornerRadius
+			//topRightRadius: Kirigami.Units.cornerRadius
+			//height: field.height
+		//}
 
 		onClicked: {
 			//picker.selectedDate = root.value

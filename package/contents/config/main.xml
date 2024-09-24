@@ -60,9 +60,11 @@
 		</entry>
 		<entry name="customTimeStart" type="Double">
 			<label>The start of the user-defined interval</label>
+			<default>NaN</default>
 		</entry>
 		<entry name="customTimeEnd" type="Double">
 			<label>The end of the user-defined interval</label>
+			<default>NaN</default>
 		</entry>
 		<entry name="showRemainingTime" type="Bool">
 			<label>Show the remaining rather than the passed time</label>

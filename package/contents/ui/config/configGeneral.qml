@@ -8,6 +8,9 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.kcmutils as KCM
+//import org.kde.kirigamiaddons.dateandtime as KAD
+
+import "."
 
 KCM.SimpleKCM {
 	id: layoutGeneralRoot
@@ -276,6 +279,7 @@ KCM.SimpleKCM {
 			}
 		}
 
+		// ============================================================ //
 		Kirigami.Separator {
 			Kirigami.FormData.isSection: true
 		}
@@ -288,27 +292,88 @@ KCM.SimpleKCM {
 			checked: cfg_timeMode === index
 		}
 
-		TextField {
-			id: customTimeStartField
-			text: new Date(plasmoid.configuration.customTimeStart).toISOString()
+
+		Row {
+			id: customTimeStartRow
+			Kirigami.FormData.label: "From"
 			enabled: cfg_timeMode === 1
-			onTextChanged: {
-				var d = Date.parse(text)
-				if (d != Number.NaN) {
-					cfg_customTimeStart = d
+
+			property date customStartDate: if (Number.isNaN(plasmoid.configuration.customTimeStart)) {
+				//console.log("is nan, new date")
+				return new Date()
+			} else {
+				//console.log("not nan")
+				return new Date(plasmoid.configuration.customTimeStart)
+			}
+
+			// saves the date to the config
+			function writeDate() {
+				layoutGeneralRoot.cfg_customTimeStart = customStartDate.getTime()
+			}
+
+			DateField {
+				value: customTimeStartRow.customStartDate
+				onAccepted: {
+					//console.log("value:", value)
+					customTimeStartRow.customStartDate.setFullYear(value.getFullYear(), value.getMonth(), value.getDate())
+					customTimeStartRow.writeDate()
+				}
+			}
+
+			TimeField {
+				hours: customTimeStartRow.customStartDate.getHours()
+				minutes: customTimeStartRow.customStartDate.getMinutes()
+				onAccepted: {
+					//console.log("hours:", hours, "minutes:", minutes)
+					customTimeStartRow.customStartDate.setHours(hours)
+					customTimeStartRow.customStartDate.setMinutes(minutes)
+					customTimeStartRow.writeDate()
 				}
 			}
 		}
-		TextField {
-			id: customTimeEndField
-			text: new Date(plasmoid.configuration.customTimeEnd).toISOString()
+
+		Row {
+			id: customTimeEndRow
+			Kirigami.FormData.label: "From"
 			enabled: cfg_timeMode === 1
-			onTextChanged: {
-				var d = Date.parse(text)
-				if (d != Number.NaN) {
-					cfg_customTimeEnd = d
+
+			property date customEndDate: if (Number.isNaN(plasmoid.configuration.customTimeEnd)) {
+				//console.log("is nan, new date")
+				return new Date()
+			} else {
+				//console.log("not nan")
+				return new Date(plasmoid.configuration.customTimeEnd)
+			}
+
+			// saves the date to the config
+			function writeDate() {
+				layoutGeneralRoot.cfg_customTimeEnd = customEndDate.getTime()
+			}
+
+			DateField {
+				value: customTimeEndRow.customEndDate
+				onAccepted: {
+					//console.log("value:", value)
+					customTimeEndRow.customEndDate.setFullYear(value.getFullYear(), value.getMonth(), value.getDate())
+					customTimeEndRow.writeDate()
 				}
 			}
+
+			TimeField {
+				hours: customTimeEndRow.customEndDate.getHours()
+				minutes: customTimeEndRow.customEndDate.getMinutes()
+				onAccepted: {
+					//console.log("hours:", hours, "minutes:", minutes)
+					customTimeEndRow.customEndDate.setHours(hours)
+					customTimeEndRow.customEndDate.setMinutes(minutes)
+					customTimeEndRow.writeDate()
+				}
+			}
+		}
+
+		// ============================================================ //
+		Kirigami.Separator {
+			Kirigami.FormData.isSection: true
 		}
 
 		CheckBox {
