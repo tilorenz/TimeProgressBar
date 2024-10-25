@@ -12,7 +12,4 @@ The pager is available on the [KDE store](https://store.kde.org/p/2126775), so y
 
  ## TODO
 - make an icon
-- proper UI to set custom start and end date
-    - currently, you have to enter the date string in a text field.
-    - it looks like neither Qt Quick nor Kirigami currently has a date picker.
 
