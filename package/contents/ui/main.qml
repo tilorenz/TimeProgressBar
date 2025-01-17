@@ -15,7 +15,7 @@ PlasmoidItem {
 
     preferredRepresentation: fullRepresentation
 
-	property var value: 0
+	property var value: [0,0,0]
 	property real interval: 0 // TODO what does this do again?
 
 	// QML doesn't automatically update the bindings that depend on the current date, so just binding
