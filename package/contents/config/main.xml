@@ -77,6 +77,10 @@
 			<label>The rotation of the plasmoid in degrees</label>
 			<default>0</default>
 		</entry>
+		<entry name="showBar" type="Bool">
+			<label>Whether to show the bar itself</label>
+			<default>true</default>
+		</entry>
 		<entry name="showText" type="Bool">
 			<label>Whether to show text on the bar</label>
 			<default>false</default>

@@ -17,6 +17,7 @@ KCM.SimpleKCM {
 
 	property int cfg_rotation
 	property alias cfg_showText: showTextBox.checked
+	property alias cfg_showBar: showBarBox.checked
 	property alias cfg_textTemplate: textTemplateField.text
 
 	Kirigami.FormLayout {
@@ -40,12 +41,33 @@ KCM.SimpleKCM {
 				ColumnLayout {
 					implicitWidth: 80
 					required property int index
-					TimeProgressBar {
+					Rectangle {
 						id: tpBar
+						radius: 8
+						color: "transparent"
 						height: 20
 						width: 60
-						value: [0.35, 0, 0]
 						rotation: parent.index * 90
+
+						Rectangle {
+							id: progressIndicator
+							anchors.left: parent.left
+							anchors.top: parent.top
+							anchors.bottom: parent.bottom
+							anchors.margins: 1
+							width: parent.width * 0.35
+							radius: parent.radius
+							color: Kirigami.Theme.highlightColor
+						}
+						Rectangle {
+							id: borderRect
+							anchors.fill: parent
+							color: "transparent"
+							z: 1
+							radius: parent.radius
+							border.color: Kirigami.Theme.textColor
+							border.width: 1
+						}
 					}
 					RadioButton {
 						checked: cfg_rotation === _rotation
@@ -59,8 +81,13 @@ KCM.SimpleKCM {
 		}
 
 		CheckBox {
+			id: showBarBox
+			Kirigami.FormData.label: "Show the bar"
+		}
+
+		CheckBox {
 			id: showTextBox
-			Kirigami.FormData.label: "Show text on the bar"
+			Kirigami.FormData.label: "Show text"
 		}
 		TextField {
 			id: textTemplateField

@@ -12,8 +12,8 @@ import org.kde.plasma.plasmoid
 import org.kde.plasma.components as PlasmaComponents
 import org.kde.kirigami as Kirigami
 
-Rectangle {
-	id: frBackground
+Item {
+	id: frRoot
 
 	readonly property real one_minute: 60 * 1000
 	readonly property real one_hour: 60 * 60 * 1000
@@ -29,26 +29,49 @@ Rectangle {
 
 	required property var value
 
-	radius: 8
-	color: Kirigami.Theme.backgroundColor
-	Layout.preferredWidth: Math.max(60,
-		(rotation === 0 || rotation === 180) && barText.visible ? barText.implicitWidth + 10 : 0
+	Layout.preferredWidth: Math.max(
+		Plasmoid.configuration.showBar ? 60 : 0,
+		Plasmoid.configuration.showText ? barText.implicitWidth + 10 : 0
 	)
-
-	//Layout.preferredHeight: (rotation === 0 || rotation === 180) ? 30 : 60
+		
 
 	Rectangle {
-		id: progressIndicator
-		anchors.left: parent.left
-		anchors.top: parent.top
-		anchors.bottom: parent.bottom
-		anchors.margins: 1
-		width: parent.width * (Plasmoid.configuration.showRemainingTime ?
-			(1 - frBackground.value[0]) : frBackground.value[0])
+		id: frBackground
+		visible: Plasmoid.configuration.showBar
 
-		radius: parent.radius
-		color: Kirigami.Theme.highlightColor
+		rotation: Plasmoid.configuration.rotation
+		radius: 8
+		color: Kirigami.Theme.backgroundColor
+		anchors.fill: parent
+
+		Rectangle {
+			id: progressIndicator
+			anchors.left: parent.left
+			anchors.top: parent.top
+			anchors.bottom: parent.bottom
+			anchors.margins: 1
+			width: parent.width * (Plasmoid.configuration.showRemainingTime ?
+				(1 - frRoot.value[0]) : frRoot.value[0])
+
+			radius: parent.radius
+			color: Kirigami.Theme.highlightColor
+		}
+
+		Rectangle {
+			// this only draws the border over the background and progressIndicator.
+			// setting the border on the parent hides it under the progressIndicator.
+			// making the indicator smaller (by setting the anchor margins)
+			// leads to the background shining through in the corners.
+			id: borderRect
+			anchors.fill: parent
+			color: "transparent"
+			z: 1
+			radius: parent.radius
+			border.color: Kirigami.Theme.textColor
+			border.width: 1
+		}
 	}
+
 
 	// time_values are [fraction of time passed, ms passed, ms total]
 	function fillTemplateText(text, time_values) {
@@ -116,26 +139,11 @@ Rectangle {
 
 	Text {
 		id: barText
+		z: 1
 		color: Kirigami.Theme.textColor
 		text: fillTemplateText(Plasmoid.configuration.textTemplate, parent.value)
 		anchors.centerIn: parent
 		visible: Plasmoid.configuration.showText
-		// offset the parent's rotation so the text is always readable
-		rotation: -parent.rotation
-	}
-
-	Rectangle {
-		// this only draws the border over the background and progressIndicator.
-		// setting the border on the parent hides it under the progressIndicator.
-		// making the indicator smaller (by setting the anchor margins)
-		// leads to the background shining through in the corners.
-		id: borderRect
-		anchors.fill: parent
-		color: "transparent"
-		z: 1
-		radius: parent.radius
-		border.color: Kirigami.Theme.textColor
-		border.width: 1
 	}
 }
 
