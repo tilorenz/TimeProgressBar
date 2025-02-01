@@ -132,8 +132,6 @@ PlasmoidItem {
 
 	fullRepresentation: TimeProgressBar {
 		value: root.value
-		Layout.fillWidth: true
-		Layout.fillHeight: true
 	}
 }
 

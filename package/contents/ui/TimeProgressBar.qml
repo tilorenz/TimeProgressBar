@@ -14,6 +14,8 @@ import org.kde.kirigami as Kirigami
 
 Item {
 	id: frRoot
+	property bool isVertical: Plasmoid.configuration.rotation == 90 || Plasmoid.configuration.rotation == 270
+	property bool isInverted: Plasmoid.configuration.rotation == 180 || Plasmoid.configuration.rotation == 90
 
 	readonly property real one_minute: 60 * 1000
 	readonly property real one_hour: 60 * 60 * 1000
@@ -29,29 +31,36 @@ Item {
 
 	required property var value
 
-	Layout.preferredWidth: Math.max(
-		Plasmoid.configuration.showBar ? 60 : 0,
-		Plasmoid.configuration.showText ? barText.implicitWidth + 10 : 0
+	Layout.preferredWidth: isVertical ? null : Math.max(
+		Plasmoid.configuration.showBar ? 80 : 0,
+		Plasmoid.configuration.showText ? barText.implicitWidth + 5 : 0
 	)
-		
+	Layout.preferredHeight: isVertical ? Math.max(
+		Plasmoid.configuration.showBar ? 80 : 0,
+		Plasmoid.configuration.showText ? barText.implicitHeight + 5 : 0
+	) : null
 
 	Rectangle {
 		id: frBackground
 		visible: Plasmoid.configuration.showBar
 
-		rotation: Plasmoid.configuration.rotation
+		rotation: frRoot.isInverted ? 180 : 0
 		radius: 8
 		color: Kirigami.Theme.backgroundColor
 		anchors.fill: parent
 
+
 		Rectangle {
 			id: progressIndicator
+			property real barScale: Plasmoid.configuration.showRemainingTime
+				? (1 - frRoot.value[0])
+				: frRoot.value[0]
+
 			anchors.left: parent.left
-			anchors.top: parent.top
 			anchors.bottom: parent.bottom
 			anchors.margins: 1
-			width: parent.width * (Plasmoid.configuration.showRemainingTime ?
-				(1 - frRoot.value[0]) : frRoot.value[0])
+			width:  (parent.width  - 2) * (frRoot.isVertical ? 1 : barScale)
+			height: (parent.height - 2) * (frRoot.isVertical ? barScale : 1)
 
 			radius: parent.radius
 			color: Kirigami.Theme.highlightColor
