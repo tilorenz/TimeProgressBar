@@ -6,6 +6,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Dialogs as QtDialogs
 import org.kde.kirigami as Kirigami
 import org.kde.kcmutils as KCM
 
@@ -13,15 +14,81 @@ import org.kde.kcmutils as KCM
 import ".."
 
 KCM.SimpleKCM {
-	id: layoutGeneralRoot
+	id: layoutAppearanceRoot
 
 	property int cfg_rotation
 	property alias cfg_showText: showTextBox.checked
 	property alias cfg_showBar: showBarBox.checked
 	property alias cfg_textTemplate: textTemplateField.text
 
+	// Font. This part is mostly taken from Plasma's digital clock
+	// (https://invent.kde.org/plasma/plasma-workspace/-/tree/master/applets/digital-clock)
+	property alias cfg_useCustomFont: useCustomFontRadioButton.checked
+	property alias cfg_fontFamily: fontDialog.fontChosen.family
+	property alias cfg_boldText: fontDialog.fontChosen.bold
+	property alias cfg_italicText: fontDialog.fontChosen.italic
+	property alias cfg_fontWeight: fontDialog.fontChosen.weight
+	property alias cfg_fontStyleName: fontDialog.fontChosen.styleName
+	property alias cfg_fontSize: fontDialog.fontChosen.pointSize
+
 	Kirigami.FormLayout {
-		id: layoutGeneral
+		id: layoutAppearance
+
+		ButtonGroup {
+			buttons: [useDefaultFontRadioButton, useCustomFontRadioButton]
+		}
+
+		RadioButton {
+			id: useDefaultFontRadioButton
+			Kirigami.FormData.label: "Text style:"
+			text: "Follow system theme"
+			checked: !cfg_useCustomFont
+		}
+
+		Row {
+			RadioButton {
+				id: useCustomFontRadioButton
+				text: "Custom"
+				onClicked: {
+                    if (cfg_fontFamily === "") {
+                        fontDialog.fontChosen = Kirigami.Theme.defaultFont
+                    }
+				}
+				anchors.verticalCenter: chooseFontButton.verticalCenter
+			}
+			Item {
+				height: 1
+				width: Kirigami.Units.smallSpacing
+			}
+			Button {
+				id: chooseFontButton
+                text: "Choose Style…"
+                icon.name: "settings-configure"
+                enabled: useCustomFontRadioButton.checked
+                onClicked: {
+                    fontDialog.selectedFont = fontDialog.fontChosen
+                    fontDialog.open()
+                }
+            }
+		}
+
+		QtDialogs.FontDialog {
+			id: fontDialog
+			title: "Choose a Font"
+			modality: Qt.WindowModal
+			parentWindow: layoutAppearanceRoot.Window.window
+
+			property font fontChosen: Qt.font()
+
+			onAccepted: {
+				fontChosen = selectedFont
+			}
+		}
+
+		// ============================================================ //
+		Kirigami.Separator {
+			Kirigami.FormData.isSection: true
+		}
 
 		ButtonGroup {
 			id: rotationGroup

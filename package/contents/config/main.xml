@@ -89,6 +89,34 @@
 			<label>The template text</label>
 			<default>%p%%</default>
 		</entry>
+
+		<entry name="useCustomFont" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="fontFamily" type="string">
+			<label>Font family. e.g "arial". The system font is used if this is not set.</label>
+			<default></default>
+		</entry>
+		<entry name="boldText" type="Bool">
+			<label>Sets the font to bold.</label>
+			<default>false</default>
+		</entry>
+		<entry name="italicText" type="Bool">
+			<label>Sets the font to italic.</label>
+			<default>false</default>
+		</entry>
+		<entry name="fontWeight" type="Int">
+			<label>Sets font weight.</label>
+			<default>50</default>
+		</entry>
+		<entry name="fontStyleName" type="string">
+			<label>Sets font style </label>
+			<default></default>
+		</entry>
+		<entry name="fontSize" type="Int">
+			<label>Sets font size.</label>
+			<default>10</default>
+		</entry>
 	</group>
 </kcfg>
 

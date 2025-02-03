@@ -153,6 +153,19 @@ Item {
 		text: fillTemplateText(Plasmoid.configuration.textTemplate, parent.value)
 		anchors.centerIn: parent
 		visible: Plasmoid.configuration.showText
+
+		font.family: (!Plasmoid.configuration.useCustomFont || Plasmoid.configuration.fontFamily.length === 0)
+			? Kirigami.Theme.defaultFont.family
+			: Plasmoid.configuration.fontFamily
+		font.weight: Plasmoid.configuration.useCustomFont
+			? Plasmoid.configuration.fontWeight
+			: Kirigami.Theme.defaultFont.weight
+		font.italic: Plasmoid.configuration.useCustomFont
+			? Plasmoid.configuration.italicText
+			: Kirigami.Theme.defaultFont.italic
+		font.pointSize: Plasmoid.configuration.useCustomFont
+			? Plasmoid.configuration.fontSize
+			: Kirigami.Theme.defaultFont.pointSize
 	}
 }
 
