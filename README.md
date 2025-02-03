@@ -10,6 +10,3 @@
 ## Installation
 The pager is available on the [KDE store](https://store.kde.org/p/2126775), so you can download and install it directly from Plasma.
 
- ## TODO
-- make an icon
-

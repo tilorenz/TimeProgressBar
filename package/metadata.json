@@ -10,7 +10,7 @@
         "Category": "Date and Time",
         "Description": "A progress bar for time",
         "EnabledByDefault": true,
-        "Icon": "sidebar-expand",
+        "Icon": "clock",
         "Id": "com.github.tilorenz.timeprogressbar",
         "License": "GPL-3.0+",
         "Name": "Time Progress Bar",
