@@ -164,15 +164,31 @@ KCM.SimpleKCM {
 		Label {
 			id: textTemplateExplaination
 			wrapMode: Text.Wrap
-			text: "% works as control character, the following character will be replaced by this scheme:\n\
-p → completed percentage\n\
-r → remaining percentage\n\
-d/D → passed/remaining days\n\
-h/H → passed/remaining hours\n\
-j/J → passed/remaining hours in the day\n\
-n/N → passed/remaining minutes in the hour\n\
-% → a literal % character (so if you want a % character in the output, use %%)\n\
-\n\
+			onLinkActivated: (link) => Qt.openUrlExternally(link)
+			// this is a bit horrible, but it seems to be the only way to get a "clickable" cursor when
+			// hovering a link
+			onHoveredLinkChanged: {
+				if (hoveredLink == "") {
+					cursorChangeMouseArea.cursorShape = Qt.ArrowCursor
+				} else {
+					cursorChangeMouseArea.cursorShape = Qt.PointingHandCursor
+				}
+			}
+			MouseArea {
+				id: cursorChangeMouseArea
+				anchors.fill: parent
+				acceptedButtons: Qt.NoButton
+			}
+			text: "You can use tags from <a href=\"https://doc.qt.io/qt-6/richtext-html-subset.html\">Qt's supported HTML subset</a><br><br>\
+% works as control character, the following character will be replaced by this scheme:<br>\
+p → completed percentage<br>\
+r → remaining percentage<br>\
+d/D → passed/remaining days<br>\
+h/H → passed/remaining hours<br>\
+j/J → passed/remaining hours in the day<br>\
+n/N → passed/remaining minutes in the hour<br>\
+% → a literal % character (so if you want a % character in the output, use %%)<br>\
+<br>\
 Example: 'Week progress: %p%%' expands to 'Week progress: 20%'."
 		}
 	}
