@@ -17,6 +17,7 @@ KCM.SimpleKCM {
 	id: layoutAppearanceRoot
 
 	property int cfg_rotation
+	property alias cfg_fillSpace: fillSpaceBox.checked
 	property alias cfg_showText: showTextBox.checked
 	property alias cfg_showBar: showBarBox.checked
 	property alias cfg_textTemplate: textTemplateField.text
@@ -33,62 +34,6 @@ KCM.SimpleKCM {
 
 	Kirigami.FormLayout {
 		id: layoutAppearance
-
-		ButtonGroup {
-			buttons: [useDefaultFontRadioButton, useCustomFontRadioButton]
-		}
-
-		RadioButton {
-			id: useDefaultFontRadioButton
-			Kirigami.FormData.label: "Text style:"
-			text: "Follow system theme"
-			checked: !cfg_useCustomFont
-		}
-
-		Row {
-			RadioButton {
-				id: useCustomFontRadioButton
-				text: "Custom"
-				onClicked: {
-                    if (cfg_fontFamily === "") {
-                        fontDialog.fontChosen = Kirigami.Theme.defaultFont
-                    }
-				}
-				anchors.verticalCenter: chooseFontButton.verticalCenter
-			}
-			Item {
-				height: 1
-				width: Kirigami.Units.smallSpacing
-			}
-			Button {
-				id: chooseFontButton
-                text: "Choose Style…"
-                icon.name: "settings-configure"
-                enabled: useCustomFontRadioButton.checked
-                onClicked: {
-                    fontDialog.selectedFont = fontDialog.fontChosen
-                    fontDialog.open()
-                }
-            }
-		}
-
-		QtDialogs.FontDialog {
-			id: fontDialog
-			title: "Choose a Font"
-			modality: Qt.WindowModal
-			parentWindow: layoutAppearanceRoot.Window.window
-
-			property font fontChosen: Qt.font()
-
-			onAccepted: {
-				fontChosen = selectedFont
-			}
-		}
-
-		// ============================================================ //
-		Kirigami.Separator {
-			Kirigami.FormData.isSection: true
-		}
 
 		ButtonGroup {
 			id: rotationGroup
@@ -148,6 +93,11 @@ KCM.SimpleKCM {
 		}
 
 		CheckBox {
+			id: fillSpaceBox
+			Kirigami.FormData.label: "Fill free space on panel"
+		}
+
+		CheckBox {
 			id: showBarBox
 			Kirigami.FormData.label: "Show the bar"
 		}
@@ -156,6 +106,64 @@ KCM.SimpleKCM {
 			id: showTextBox
 			Kirigami.FormData.label: "Show text"
 		}
+
+		// Text Config
+		// ============================================================ //
+		Kirigami.Separator {
+			Kirigami.FormData.isSection: true
+		}
+
+		ButtonGroup {
+			buttons: [useDefaultFontRadioButton, useCustomFontRadioButton]
+		}
+
+		RadioButton {
+			id: useDefaultFontRadioButton
+			Kirigami.FormData.label: "Text style:"
+			text: "Follow system theme"
+			checked: !cfg_useCustomFont
+		}
+
+		Row {
+			RadioButton {
+				id: useCustomFontRadioButton
+				text: "Custom"
+				onClicked: {
+                    if (cfg_fontFamily === "") {
+                        fontDialog.fontChosen = Kirigami.Theme.defaultFont
+                    }
+				}
+				anchors.verticalCenter: chooseFontButton.verticalCenter
+			}
+			Item {
+				height: 1
+				width: Kirigami.Units.smallSpacing
+			}
+			Button {
+				id: chooseFontButton
+                text: "Choose Style…"
+                icon.name: "settings-configure"
+                enabled: useCustomFontRadioButton.checked
+                onClicked: {
+                    fontDialog.selectedFont = fontDialog.fontChosen
+                    fontDialog.open()
+                }
+            }
+		}
+
+		QtDialogs.FontDialog {
+			id: fontDialog
+			title: "Choose a Font"
+			modality: Qt.WindowModal
+			parentWindow: layoutAppearanceRoot.Window.window
+
+			property font fontChosen: Qt.font()
+
+			onAccepted: {
+				fontChosen = selectedFont
+			}
+		}
+
 		TextField {
 			id: textTemplateField
 			Kirigami.FormData.label: "Text Template"

@@ -77,6 +77,10 @@
 			<label>The rotation of the plasmoid in degrees</label>
 			<default>0</default>
 		</entry>
+		<entry name="fillSpace" type="Bool">
+			<label>Fill all available space rather than staying at a fixed size on panels</label>
+			<default>false</default>
+		</entry>
 		<entry name="showBar" type="Bool">
 			<label>Whether to show the bar itself</label>
 			<default>true</default>
