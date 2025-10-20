@@ -14,7 +14,7 @@
         "Id": "com.github.tilorenz.timeprogressbar",
         "License": "GPL-3.0+",
         "Name": "Time Progress Bar",
-        "Version": "1.5",
+        "Version": "1.6",
         "Website": "https://github.com/tilorenz/TimeProgressBar"
     },
     "X-Plasma-API-Minimum-Version": "6.0"

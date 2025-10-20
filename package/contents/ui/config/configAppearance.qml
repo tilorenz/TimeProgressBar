@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2024 Tino Lorenz <tilrnz@gmx.net>
+    SPDX-FileCopyrightText: 2024-2025 Tino Lorenz <tilrnz@gmx.net>
     SPDX-License-Identifier:  GPL-3.0-or-later
 */
 
@@ -10,6 +10,8 @@ import QtQuick.Dialogs as QtDialogs
 import org.kde.kirigami as Kirigami
 import org.kde.kcmutils as KCM
 
+// For ColorSelectionRow
+import "."
 // for TimeProgressBar
 import ".."
 
@@ -31,6 +33,16 @@ KCM.SimpleKCM {
 	property alias cfg_fontWeight: fontDialog.fontChosen.weight
 	property alias cfg_fontStyleName: fontDialog.fontChosen.styleName
 	property alias cfg_fontSize: fontDialog.fontChosen.pointSize
+
+	// Colors
+	property alias cfg_colorModeBar: barColors.colorMode
+	property alias cfg_customColorBar: barColors.customColor
+	property alias cfg_colorModeBorder: borderColors.colorMode
+	property alias cfg_customColorBorder: borderColors.customColor
+	property alias cfg_colorModeBackground: backgroundColors.colorMode
+	property alias cfg_customColorBackground: backgroundColors.customColor
+	property alias cfg_colorModeText: textColors.colorMode
+	property alias cfg_customColorText: textColors.customColor
 
 	Kirigami.FormLayout {
 		id: layoutAppearance
@@ -105,6 +117,32 @@ KCM.SimpleKCM {
 		CheckBox {
 			id: showTextBox
 			Kirigami.FormData.label: "Show text"
+		}
+
+		// Colors Config
+		// ============================================================ //
+		Kirigami.Separator {
+			Kirigami.FormData.isSection: true
+		}
+
+        ColorSelectionRow {
+			id: barColors
+			Kirigami.FormData.label: "Bar Colors:"
+		}
+
+        ColorSelectionRow {
+			id: borderColors
+			Kirigami.FormData.label: "Border Colors:"
+		}
+
+        ColorSelectionRow {
+			id: backgroundColors
+			Kirigami.FormData.label: "Background Colors:"
+		}
+
+        ColorSelectionRow {
+			id: textColors
+			Kirigami.FormData.label: "Text Colors:"
 		}
 
 		// Text Config

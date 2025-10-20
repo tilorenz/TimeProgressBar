@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2024 Tino Lorenz <tilrnz@gmx.net>
+    SPDX-FileCopyrightText: 2024-2025 Tino Lorenz <tilrnz@gmx.net>
     SPDX-License-Identifier:  GPL-3.0-or-later
 */
 
@@ -40,13 +40,29 @@ Item {
 		Plasmoid.configuration.showText ? barText.implicitHeight + 5 : 0
 	) : null
 
+	function colorFromConfig(colorMode, customColor) {
+		switch (colorMode) {
+			case 0:
+				return customColor
+			case 1:
+				return Kirigami.Theme.highlightColor
+			case 2:
+				return Kirigami.Theme.backgroundColor
+			case 3:
+				return Kirigami.Theme.textColor
+			default:
+				console.log("Invalid colorMode given:", colorMode)
+				return customColor
+		}
+	}
+
 	Rectangle {
 		id: frBackground
 		visible: Plasmoid.configuration.showBar
 
 		rotation: frRoot.isInverted ? 180 : 0
 		radius: 8
-		color: Kirigami.Theme.backgroundColor
+		color: colorFromConfig(Plasmoid.configuration.colorModeBackground, Plasmoid.configuration.customColorBackground)
 		anchors.fill: parent
 
 
@@ -63,7 +79,7 @@ Item {
 			height: (parent.height - 2) * (frRoot.isVertical ? barScale : 1)
 
 			radius: parent.radius
-			color: Kirigami.Theme.highlightColor
+			color: colorFromConfig(Plasmoid.configuration.colorModeBar, Plasmoid.configuration.customColorBar)
 		}
 
 		Rectangle {
@@ -76,7 +92,7 @@ Item {
 			color: "transparent"
 			z: 1
 			radius: parent.radius
-			border.color: Kirigami.Theme.textColor
+			border.color: colorFromConfig(Plasmoid.configuration.colorModeBorder, Plasmoid.configuration.customColorBorder)
 			border.width: 1
 		}
 	}
@@ -149,7 +165,7 @@ Item {
 	Text {
 		id: barText
 		z: 1
-		color: Kirigami.Theme.textColor
+		color: colorFromConfig(Plasmoid.configuration.colorModeText, Plasmoid.configuration.customColorText)
 		text: fillTemplateText(Plasmoid.configuration.textTemplate, parent.value)
 		anchors.centerIn: parent
 		visible: Plasmoid.configuration.showText

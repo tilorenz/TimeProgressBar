@@ -94,6 +94,44 @@
 			<default>%p%%</default>
 		</entry>
 
+		<entry name="colorModeBar" type="Int">
+			<label>The color mode of the bar. The options are:
+				"Custom",
+				"Theme's highlight color",
+				"Theme's background color",
+				"Theme's text color",
+			</label>
+			<default>1</default>
+		</entry>
+		<entry name="customColorBar" type="Color">
+			<label>The custom RGB color of the bar.</label>
+			<default>#2233FF</default>
+		</entry>
+		<entry name="colorModeBorder" type="Int">
+			<label>The color of the border.</label>
+			<default>3</default>
+		</entry>
+		<entry name="customColorBorder" type="Color">
+			<label>The custom RGB color of the border.</label>
+			<default>#DDDDDD</default>
+		</entry>
+		<entry name="colorModeBackground" type="Int">
+			<label>The color of the background.</label>
+			<default>2</default>
+		</entry>
+		<entry name="customColorBackground" type="Color">
+			<label>The custom RGB color of the background.</label>
+			<default>#333333</default>
+		</entry>
+		<entry name="colorModeText" type="Int">
+			<label>The color of the text.</label>
+			<default>3</default>
+		</entry>
+		<entry name="customColorText" type="Color">
+			<label>The custom RGB color of the text.</label>
+			<default>#DDDDDD</default>
+		</entry>
+
 		<entry name="useCustomFont" type="Bool">
 			<default>false</default>
 		</entry>
